@@ -457,7 +457,6 @@ h1 {
 h2 {
   padding-bottom: 10px;
   font-size: 32px;
-  background: url('./images/bg_hr.png') repeat-x bottom;
 }
 
 h3 {
@@ -661,7 +660,7 @@ Full-Width Styles
   z-index: 10;
   padding: 10px 50px 10px 10px;
   color: #fff;
-  background: url('./images/blacktocat.png') #0090ff no-repeat 95% 50%;
+  background: url(../images/blacktocat.png) #0090ff no-repeat 95% 50%;
   font-weight: 700;
   box-shadow: 0 0 10px rgba(0,0,0,.5);
   border-bottom-left-radius: 2px;
@@ -704,7 +703,7 @@ Full-Width Styles
   bottom: -40px;
   right: 0;
   height: 70px;
-  background: url('./images/icon_download.png') no-repeat 0% 90%;
+  background: url(../images/icon_download.png) no-repeat 0% 90%;
 }
 
 .zip_download_link {
@@ -714,7 +713,7 @@ Full-Width Styles
   height:70px;
   text-indent: -5000px;
   overflow: hidden;
-  background: url(./images/sprite_download.png) no-repeat bottom left;
+  background: url(../images/sprite_download.png) no-repeat bottom left;
 }
 
 .tar_download_link {
@@ -890,12 +889,10 @@ Small Device Styles
 }
 
 .github-box .github-box-header .github-stats a:before {
-  font-family: 'EntypoRegular';
-  content: attr(data-icon);
   display: inline-block;
   speak: none;
   padding-right: 2px;
-  font-size: 2em;
+  font-size: 1em;
 }
 
 .github-box .github-box-header .github-stats .repo-stars {
@@ -935,7 +932,7 @@ Small Device Styles
   background: white;
   border-radius: 0 0 3px 3px;
   padding: 10px;
-  height: 24px;
+  height: 2em;
 }
 
 .github-box .github-box-download .repo-update {
@@ -943,6 +940,7 @@ Small Device Styles
   font-size: 11px;
   color: #666;
   line-height: 24px;
+  float: left;
 }
 
 .github-box .github-box-download .repo-update strong {
@@ -951,13 +949,15 @@ Small Device Styles
   color: #000;
 }
 
-.github-box .github-box-download .repo-download {
-  position: absolute;
+
+.github-box .github-box-download .repo-download,
+.github-box .github-box-download .repo-web-link {
+  float: right;
   display: block;
+  margin-left: 1em;
   top: .25em;
   right: .25em;
-  height: 2em;
-  line-height: 2em;
+  padding-top: .25em;
   font-size: 1em;
   color: #666;
   font-weight: bold;
@@ -965,29 +965,37 @@ Small Device Styles
   border: 1px solid #ddd;
   border-bottom-color: #bbb;
   border-radius: 3px;
-  width: 2em;
   background: -webkit-linear-gradient(whiteSmoke, #E5E5E5);
   background: -moz-linear-gradient(#f1f7fa, #dbeaf1);
-  filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
   opacity: 1;
 }
 
-.github-box .github-box-download .repo-download:hover {
+.github-box .github-box-download .repo-download {
+  /* Don't display download link on small devices.*/
+  display: none;
+}
+
+@media (min-width: 49em) {
+  .github-box .github-box-download .repo-download {
+    display: block;
+  }
+}
+
+.github-box .github-box-download .repo-download:hover,
+.github-box .github-box-download .repo-web-link:hover {
   color: #527894;
   border-color: #cfe3ed;
   border-bottom-color: #9fc7db;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
 
-.github-box .github-box-download .repo-download:before {
-  font-family: 'EntypoRegular';
-  text-indent: 0px;
-  content: attr(data-icon);
+.github-box .github-box-download .repo-download:before,
+.github-box .github-box-download .repo-web-link:before {
+  text-indent: 0;
   display: inline-block;
   speak: none;
-  font-size: 3em;
-  padding: 0 .1em;
+  font-size: 1.5em;
+  padding: 0;
 }
 
 /* Breakpoint content-driven */
@@ -1001,16 +1009,59 @@ Small Device Styles
 }
 
 /* Fonts */
-
-@font-face {
-  font-family: 'EntypoRegular';
-  src: url('./fonts/Entypo-webfont.eot');
-  src: url('./fonts/Entypo-webfont.eot?#iefix') format('embedded-opentype'),
-    url('./fonts/Entypo-webfont.svg#EntypoRegular') format('svg'),
-    url('./fonts/Entypo-webfont.woff') format('woff'),
-    url('./fonts/Entypo-webfont.ttf') format('truetype');
+ @font-face {
+  font-family: 'fontello';
+  src: url('../font/fontello.eot?24772579');
+  src: url('../font/fontello.eot?24772579#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff?24772579') format('woff'),
+       url('../font/fontello.ttf?24772579') format('truetype'),
+       url('../font/fontello.svg?24772579#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 
-.repo-issues {display: none;}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?24772579#fontello') format('svg');
+  }
+}
+
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+   font-size: 100%;
+
+  /* Uncomment for 3D effect */
+   text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3);
+}
+
+.icon-star:before { content: '\2605'; } /* '★' */
+.icon-download:before { content: '\f0ed'; } /* '' */
+.icon-web:before { content: '\1f30e'; } /* '\1f30e' */
+.icon-fork:before { content: '\f126'; } /* '' */

@@ -24,6 +24,7 @@
           }
         });
         target.html(list);
+        // Run the GitHub wrapper plugin.
         $('[data-repo]').github();
       });
 

@@ -7,6 +7,7 @@
  *  MIT License
  */
 // -- Github Repository --------------------------------------------------------
+var homepage = "";
 
 function GithubRepo( repo ) {
   this.description = repo.description;
@@ -16,6 +17,13 @@ function GithubRepo( repo ) {
   this.pushed_at = repo.pushed_at;
   this.url = repo.url;
   this.watchers = repo.watchers;
+  this.homepage = repo.homepage;
+    if (this.homepage) {
+    homepage = "<a class='repo-web-link icon-web' title='View on the web' href='" + this.homepage + "'></a>";
+  } else {
+    homepage = "";
+  }
+
 }
 
 // Parses HTML template
@@ -30,9 +38,9 @@ GithubRepo.prototype.toHTML = function () {
           "<a href='" + this.url + "'>" + this.name + "</a>" +
         "</h3>" +
         "<div class='github-stats'>" +
-          "<a class='repo-stars' title='Stars' data-icon='7' href='" + this.url + "/stargazers'>" + this.watchers + "</a>" +
-          "<a class='repo-forks' title='Forks' data-icon='f' href='" + this.url + "/network'>" + this.forks + "</a>" +
-          "<a class='repo-issues' title='Issues' data-icon='i' href='" + this.url + "/issues'>" + this.open_issues + "</a>" +
+          "<a class='repo-stars icon-star' title='Stars' href='" + this.url + "/stargazers'>" + this.watchers + "</a>" +
+          "<a class='repo-forks icon-fork' title='Forks' data-icon='f' href='" + this.url + "/network'>" + this.forks + "</a>" +
+          //"<a class='repo-issues' title='Issues' data-icon='i' href='" + this.url + "/issues'>" + this.open_issues + "</a>" +
         "</div>" +
       "</div>" +
       "<div class='github-box-content'>" +
@@ -40,7 +48,8 @@ GithubRepo.prototype.toHTML = function () {
       "</div>" +
       "<div class='github-box-download'>" +
         "<p class='repo-update'>Latest commit to <strong>master</strong> on " + this.pushed_at + "</p>" +
-        "<a class='repo-download' title='Download as zip' data-icon='w' href='" + this.url + "/zipball/master'></a>" +
+        homepage +
+        "<a class='repo-download icon-download' title='Download as zip' href='" + this.url + "/zipball/master'></a>" +
       "</div>" +
     "</div>");
 };
